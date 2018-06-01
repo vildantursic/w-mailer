@@ -11,7 +11,7 @@ var storage = multer.diskStorage({
     cb(null, './uploads')
   },
   filename: function (req, file, cb) {
-    cb(null, 'cv.pdf')
+    cb(null, file.originalname)
   }
 })
 
@@ -49,8 +49,8 @@ app.post('/contact', upload.single('cv'), (req, res, next) => {
         text: req.body.text,
         html: req.body.html,
         attachments: [{
-          filename: 'cv.pdf',
-          path: './uploads/cv.pdf'
+          filename: req.file.originalname,
+          path: `./uploads/${req.file.originalname}`
         }]
     };
 
